@@ -16,8 +16,10 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Label } from "@/components/ui/label";
 import { NumberInput } from "@/components/number-input";
 import { TagInput } from "@/components/tag-input";
+import { useRouter } from "next/navigation";
 
 export default function HealthForm() {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     race: null,
     age: null,
@@ -92,8 +94,9 @@ export default function HealthForm() {
       }
 
       const result = await response.json();
-      alert("Data submitted successfully");
       console.log("Prediction result:", result);
+      // Use router.replace for client-side navigation
+      router.replace(`/result?prediction=${result.prediction}`);
     } catch (error) {
       console.error("Error:", error);
       alert(error instanceof Error ? error.message : "Error submitting data");
